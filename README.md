@@ -3,20 +3,6 @@
 [https://pivipopi.notion.site/kubeadm-147cffb1b55f46b59a41b85cfff83945]
 
 
-# kubeadm 설치 문서
-
-- [kubeadm으로 kubernetes 클러스터 배포]()
-- [노드 추가]()
-- [버전 업그레이드]()
-- 애드온
-
-    1) [metallb]()
-
-    2) [ingress]()
-
-    3) [rook]()
-
-    4) [metrics-server]()
 
 ### kubeadm, kubectl, kubelet 설치
 
