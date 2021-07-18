@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pw-deploy
+  labels:
+    app: pw-deploy
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  minReadySeconds: 20
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pw-deploy
+  template:
+    metadata:
+      labels:
+        app: pw-deploy
+    spec:
+      containers:
+      - image: wordpress
+        name: pw
+        ports:
+        - containerPort: 8080
