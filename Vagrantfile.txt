@@ -1,0 +1,67 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # k-control VM
+  config.vm.define "k-control" do |config|
+    config.vm.box = "ubuntu/focal64"
+    config.vm.provider "virtualbox" do |vb|
+       vb.name = "k-control"
+       vb.cpus = 2
+       vb.memory = 3000
+    end
+    config.vm.hostname = "k-control"
+    config.vm.network "private_network", ip: "192.168.200.50"
+  end
+
+  # k-node1 VM
+  config.vm.define "k-node1" do |config|
+    config.vm.box = "ubuntu/focal64"
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "k-node1"
+      vb.cpus = 2
+      vb.memory = 3000
+      unless File.exist?('./.disk/ceph1.vdi')
+       vb.customize ['createmedium', 'disk', '--filename', './.disk/ceph1.vdi', '--size', 10240]
+      end
+      vb.customize ['storageattach', :id, '--storagectl', 'SCSI', '--port', 2, '--device', 0, '--type', 'hdd', '--medium',
+'./.disk/ceph1.vdi']
+    end
+    config.vm.hostname = "k-node1"
+    config.vm.network "private_network", ip: "192.168.200.51"
+  end
+
+  # k-node2 VM
+  config.vm.define "k-node2" do |config|
+    config.vm.box = "ubuntu/focal64"
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "k-node2"
+      vb.cpus = 2
+      vb.memory = 3000
+      unless File.exist?('./.disk/ceph2.vdi')
+        vb.customize ['createmedium', 'disk', '--filename', './.disk/ceph2.vdi', '--size', 10240]
+      end
+      vb.customize ['storageattach', :id, '--storagectl', 'SCSI', '--port', 2, '--device', 0, '--type', 'hdd', '--medium',
+'./.disk/ceph2.vdi']
+    end
+    config.vm.hostname = "k-node2"
+    config.vm.network "private_network", ip: "192.168.200.52"
+  end
+
+  # k-node3 VM
+  config.vm.define "k-node3" do |config|
+    config.vm.box = "ubuntu/focal64"
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "k-node3"
+      vb.cpus = 2
+      vb.memory = 3000
+      unless File.exist?('./.disk/ceph3.vdi')
+        vb.customize ['createmedium', 'disk', '--filename', './.disk/ceph3.vdi', '--size', 10240]
+      end
+      vb.customize ['storageattach', :id, '--storagectl', 'SCSI', '--port', 2, '--device', 0, '--type', 'hdd', '--medium',
+'./.disk/ceph3.vdi']
+    end
+    config.vm.hostname = "k-node3"
+    config.vm.network "private_network", ip: "192.168.200.53"
+  end
+end
